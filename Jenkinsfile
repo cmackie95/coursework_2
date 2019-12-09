@@ -8,11 +8,11 @@ pipeline {
            }
         }
 		stage('SonarQube Static Analysis') {
-			echo 'Testing With Static Analysis...'
 			environment {
 				scannerHome = tool 'SonarQube'
 			}
 			steps {
+				echo 'Testing With Static Analysis...'
 				withSonarQubeEnv('sonarqube') {
 					sh "${scannerHome}/bin/sonar-scanner"
 				}
