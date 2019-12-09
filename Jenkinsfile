@@ -2,13 +2,8 @@ pipeline {
     agent any
 
     stages {
-		stage('Clone Repository') {
-			steps {
-				echo "Checking Out Cloned Repository..."
-				checkout scm
-			}
-		}
         stage('Build') {
+			agent { docker { image 'node:6.3' } }
             steps {
                 echo 'Building..'
 				sh 'npm install'
