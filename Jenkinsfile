@@ -7,9 +7,10 @@ pipeline {
                 echo 'Building..'
            }
         }
-		stage('Sonarqube') {
+		stage('SonarQube Static Analysis') {
+			echo 'Testing With Static Analysis...'
 			environment {
-				scannerHome = tool 'SonarQubeScanner'
+				scannerHome = tool 'SonarQube'
 			}
 			steps {
 				withSonarQubeEnv('sonarqube') {
