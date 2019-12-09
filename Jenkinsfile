@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+		stage('Clone Repository') {
+			steps {
+				echo "Checking Out Cloned Repository..."
+				checkout scm
+			}
+		}
         stage('Build') {
             steps {
                 echo 'Building..'
@@ -20,12 +26,6 @@ pipeline {
 					sleep(10)
 					waitForQualityGate abortPipeline: true
 				}
-			}
-		}
-		stage('Clone Repository') {
-			steps {
-				echo "Checking Out Cloned Repository..."
-				checkout scm
 			}
 		}
 		stage('Build Docker image') {
