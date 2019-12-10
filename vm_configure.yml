@@ -38,7 +38,6 @@
 
   - name: Run kubectl installation script
     command: /home/cmackie95/kubectl.sh
-    become: yes
 
   - name: Copy minikube.sh to productionVM
     copy:
@@ -51,4 +50,3 @@
 
   - name: Run minikube installation script
     command: sudo /home/cmackie95/minikube.sh
-    become: yes
