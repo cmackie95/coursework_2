@@ -28,7 +28,9 @@
       src: ./kubectl_pod_deployment.yml
       dest: /home/cmackie95/kubectl_pod_deployment.yml
     when: result.stat.exists == false
-
+  
+  - name: Connect to productionVM
+    command: ssh cmackie95@13.82.68.29
+    
   - name: Run kubectl_pod_deployment installation script
     command: kubectl apply -f /home/cmackie95/kubectl_pod_deployment.yml
-    register: final
