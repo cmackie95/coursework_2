@@ -20,14 +20,15 @@
       - python-pip
       
   - stat:
-      path: /home/cmackie95/kubectl_deployment.yml
+      path: /home/cmackie95/kubectl_pod_deployment.yml
     register: result
    
-  - name: Copy kubectl_deployment.yml to productionVM
+  - name: Copy kubectl_pod_deployment.yml to productionVM
     copy:
-      src: ./kubectl_deployment.yml
-      dest: /home/cmackie95/kubectl_deployment.yml
+      src: ./kubectl_pod_deployment.yml
+      dest: /home/cmackie95/kubectl_pod_deployment.yml
     when: result.stat.exists == false
 
-  - name: Run kubectl_deployment installation script
-    command: kubectl apply -f ./kubectl_deployment.yml
+  - name: Run kubectl_pod_deployment installation script
+    command: kubectl apply -f ./kubectl_pod_deployment.yml
+    ignore_errors: yes
