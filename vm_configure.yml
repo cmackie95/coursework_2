@@ -31,6 +31,10 @@
       path: /home/cmackie95/kubectl_pod_deployment.yml
     register: podDeploymentResult
 
+  - stat:
+      path: /home/cmackie95/kubectl_service_deployment.yml
+    register: serviceDeploymentResult
+
   - name: Copy kubectl.sh to productionVM
     copy:
       src: ./kubectl.sh
@@ -65,4 +69,4 @@
     copy:
       src: ./kubectl_service_deployment.yml
       dest: /home/cmackie95/kubectl_service_deployment.yml
-    when: podDeploymentResult.stat.exists == false 
+    when: serviceDeploymentResult.stat.exists == false 
