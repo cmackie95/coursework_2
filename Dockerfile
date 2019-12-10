@@ -13,7 +13,7 @@ HEALTHCHECK --interval=5s \
 EXPOSE 8080
 
 #copy server.js file
-COPY server.js
+COPY server.js ./
 
 #build/run server.js file
 CMD node server.js
