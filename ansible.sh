@@ -1,6 +1,6 @@
 #! /bin/bash
 # This script must be run using the sudo command
-# It will complete the ansbile installation and setup
+# It will complete the ansible installation and setup
 
 sudo apt-get update
 

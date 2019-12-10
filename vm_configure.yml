@@ -1,0 +1,44 @@
+- name: Configure Production VM
+  hosts: azure
+  user: cmackie95
+  become: yes
+
+  vars:
+    myResourceGroup: DevOps
+    myVM: productionVM
+
+  tasks:
+  - name: Install Various Packages
+    apt:
+      update_cache: yes
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - libssl-dev
+      - libffi-dev
+      - python-dev
+      - python-pip
+      
+  - stat:
+      path: /home/cmackie95/kubectl.sh
+    register: kubectlResult
+   
+  - stat:
+      path: /home/cmackie95/kubectl.sh
+    register: minikubeResult   
+
+  - name: Install kubectl
+    copy:
+      src: ./kubectl.sh
+      dest: /home/cmackie95/kubectl.sh
+    when: kubectlResult.stat.exists == false
+    command: chmod +x /home/cmackie95/kubectl.sh
+    command: sudo /home/cmackie95/kubectl.sh
+    
+    - name: Install Minikube
+    copy:
+      src: ./minikube.sh
+      dest: /home/cmackie95/minikube.sh
+    when: minikubeResult.stat.exists == false
+    command: chmod +x /home/cmackie95/minikube.sh
+    command: sudo /home/cmackie95/minikube.sh
