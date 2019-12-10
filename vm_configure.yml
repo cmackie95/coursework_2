@@ -27,6 +27,10 @@
       path: /home/cmackie95/minikube.sh
     register: minikubeResult   
 
+  - stat:
+      path: /home/cmackie95/kubectl_pod_deployment.yml
+    register: podDeploymentResult
+
   - name: Copy kubectl.sh to productionVM
     copy:
       src: ./kubectl.sh
@@ -43,10 +47,22 @@
     copy:
       src: ./minikube.sh
       dest: /home/cmackie95/minikube.sh
-    when: kubectlResult.stat.exists == false
+    when: minikubeResult.stat.exists == false
 
   - name: Set minikube.sh permissions
     command: chmod +x /home/cmackie95/minikube.sh
 
   - name: Run minikube installation script
     command: sudo /home/cmackie95/minikube.sh
+   
+  - name: Copy kubectl_pod_deployment.yml to productionVM
+    copy:
+      src: ./kubectl_pod_deployment.yml
+      dest: /home/cmackie95/kubectl_pod_deployment.yml
+    when: podDeploymentResult.stat.exists == false
+
+  - name: Copy kubectl_service_deployment.yml to productionVM
+    copy:
+      src: ./kubectl_service_deployment.yml
+      dest: /home/cmackie95/kubectl_service_deployment.yml
+    when: podDeploymentResult.stat.exists == false 
