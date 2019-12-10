@@ -24,7 +24,7 @@
     register: kubectlResult
    
   - stat:
-      path: /home/cmackie95/kubectl.sh
+      path: /home/cmackie95/minikube.sh
     register: minikubeResult   
 
   - name: Install kubectl
