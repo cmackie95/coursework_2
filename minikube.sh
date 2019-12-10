@@ -14,4 +14,4 @@ chmod +x minikube
 
 sudo mv minikube /usr/local/bin/  
 
-minikube start --vm-driver=virtualbox
+sudo minikube start --vm-driver=virtualbox
