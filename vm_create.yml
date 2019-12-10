@@ -1,0 +1,76 @@
+- name: Create Production VM
+  hosts: localhost
+  connection: local
+
+  vars:
+    myResourceGroup: DevOps
+    myVnet: DevOps-productionVM-vnet
+    mySubnet: DevOps-productionVM-subnet
+    myPublicIP: DevOps-productionVM-publicip
+    myNIC: DevOps-productionVM-nic
+    myNetworkSecurityGroup: DevOps-productionVM-nsg
+    myVM: productionVM
+    mySSHkey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDrXdTouRuSF7cwrH6UyhcNH19VIvafV1ffM7/HSz4I96Pf/uCQF/+utVcix2CvQtrKpIqclLeVRDgjKPKTYZg1nNJ934DkuMijwkA/tmOk3V2ZlY6MptbJbaVWOzVla6qdL90Fy0rS4TMPyHY24alnHVpntJ3l+9+m3KK2byAvlVLh8t7mE7iTphgYdBoSqoPNURdBZUgrEl7YjlWOQmcrclX9VBaPhrHKxknda9e9oVLUjrmZBwGwYcOeg2+viqgPKi+CGkiCQfhGHaq1TGkqW2rrHv0nC8Suj3mV29PG8j01voQiLn80RB2fFSqXvY9Po+L+ABYQezJTD/RHI0nj cmackie95@buildVM
+
+  tasks:
+  - name: Create virtual network
+    azure_rm_virtualnetwork: 
+      resource_group: "{{ myResourceGroup }}"
+      name: "{{  myVnet }}"
+      address_prefixes: "10.0.0.0/16"
+
+  - name: Add subnet
+    azure_rm_subnet: 
+      resource_group: "{{ myResourceGroup }}"
+      name: "{{ mySubnet }}"
+      address_prefix: "10.0.1.0/24"
+      virtual_network: "{{ myVnet }}"
+
+  - name: Create public IP address
+    azure_rm_publicipaddress:
+      resource_group: "{{ myResourceGroup }}"
+      allocation_method: Static
+      name: "{{ myPublicIP }}"
+    register: output_ip_address
+
+  - name: Create Network Security Group that allows SSH
+    azure_rm_securitygroup: 
+      resource_group: "{{ myResourceGroup}}"
+      name: "{{ myNetworkSecurityGroup }}"
+      rules: 
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 1001
+          direction: Inbound
+
+  - name: Create virtual network interface card
+    azure_rm_networkinterface: 
+      resource_group: "{{ myResourceGroup }}"
+      name: "{{ myNIC }}"
+      virtual_network: "{{ myVnet }}"
+      subnet: "{{ mySubnet }}"
+      public_ip_name: "{{ myPublicIP }}"
+      security_group: "{{ myNetworkSecurityGroup }}"
+
+  - name: Create VM
+    azure_rm_virtualmachine: 
+      resource_group: "{{ myResourceGroup }}"
+      name: "{{ myVM }}"
+      vm_size: Standard_DS1_v2
+      admin_username: azureuser
+      ssh_password_enabled: false
+      ssh_public_keys: 
+        - path: /home/azureuser/.ssh/authorized_keys
+          key_data: "{{ mySSHkey }}"
+      network_interfaces: "{{ myNIC }}"
+      image: 
+        offer: UbuntuServer
+        publisher: Canonical
+        sku: '16.04-LTS'
+        version: latest
+
+  - name: Print Public IP for VM which will be created
+    debug: 
+      msg: "The public IP is {{ output_ip_address.state.ip_address }}."
