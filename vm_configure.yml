@@ -27,18 +27,26 @@
       path: /home/cmackie95/minikube.sh
     register: minikubeResult   
 
-  - name: Install kubectl
+  - name: Copy kubectl.sh to productionVM
     copy:
       src: ./kubectl.sh
       dest: /home/cmackie95/kubectl.sh
     when: kubectlResult.stat.exists == false
+
+  - name: Set kubectl.sh permissions
     command: chmod +x /home/cmackie95/kubectl.sh
+
+  - name: Run kubectl installation script
     command: sudo /home/cmackie95/kubectl.sh
-    
-  - name: Install Minikube
+
+  - name: Copy minikube.sh to productionVM
     copy:
       src: ./minikube.sh
       dest: /home/cmackie95/minikube.sh
-    when: minikubeResult.stat.exists == false
+    when: kubectlResult.stat.exists == false
+
+  - name: Set minikube.sh permissions
     command: chmod +x /home/cmackie95/minikube.sh
+
+  - name: Run minikube installation script
     command: sudo /home/cmackie95/minikube.sh
