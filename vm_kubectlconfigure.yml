@@ -30,5 +30,4 @@
     when: result.stat.exists == false
 
   - name: Run kubectl_pod_deployment installation script
-    command: kubectl apply -f ./kubectl_pod_deployment.yml
-    ignore_errors: yes
+    command: sudo kubectl apply -f ./kubectl_pod_deployment.yml
