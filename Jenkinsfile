@@ -28,7 +28,7 @@ pipeline {
 			steps {
 				echo "Building Docker Image..."
 				script {
-					app = docker.build("cmackie95/coursework_2")
+					app = docker.build("cmackie95/coursework2")
 				}
 			}
 		}	
