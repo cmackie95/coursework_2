@@ -30,4 +30,4 @@
     when: result.stat.exists == false
 
   - name: Run kubectl_deployment installation script
-    command: sudo /home/cmackie95/kubectl_deployment.yml
+    command: kubectl apply -f ./kubectl_deployment.yml
