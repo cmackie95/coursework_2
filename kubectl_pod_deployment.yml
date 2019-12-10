@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: web
-        image: docker.io/cmackie95/coursework2
+        image: docker.io/cmackie95/coursework2:latest
         ports:
         - containerPort: 80
