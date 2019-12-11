@@ -46,9 +46,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-				container('kubectl') {
-					sh "kubectl get nodes"
-				}
+				sh "kubectl set image deployments/coursework2 web=docker.io/cmackie95/coursework2:${env.BUILD_NUMBER}"
             }
         }
     }
