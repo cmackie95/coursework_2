@@ -1,0 +1,17 @@
+- name: Configure Production VM
+  hosts: azure
+
+  vars:
+    myResourceGroup: DevOps
+    myVM: productionVM
+
+  tasks:
+  - name: Start minikube
+    command: minikube start --vm-driver=virtualbox
+
+  tasks:
+  - name: Create Pods
+    command: kubectl apply -f /home/cmackie95/kubectl_pod_deployment.yml
+    
+  - name: Create Service
+    command: kubectl apply -f /home/cmackie95/kubectl_service_deployment.yml
