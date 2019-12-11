@@ -46,7 +46,11 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-					sh "ansible-playbook -i azure_rm.py -l productionVM vm_updateimage.yml"
+				script {
+					def tfHome = tool name: 'Ansible'
+					env.PATH = "${tfHome}:${env.PATH}"
+					sh 'ansible --version'                 
+				}
             }
         }
     }
