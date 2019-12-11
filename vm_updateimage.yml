@@ -1,0 +1,10 @@
+- name: Update Production VM
+  hosts: azure
+
+  vars:
+    myResourceGroup: DevOps
+    myVM: productionVM
+
+  tasks:
+  - name: UpdateImage
+    command: kubectl set image deployments/coursework2 web=docker.io/cmackie95/coursework2:latest

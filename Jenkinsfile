@@ -2,11 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Build & Test') {
 			agent { docker { image 'node:6.3' } }
             steps {
                 echo 'Building..'
 				sh 'npm install'
+				sh 'npm test'
            }
         }
 		stage('SonarQube Static Analysis') {
@@ -46,7 +47,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-				sh "kubectl set image deployments/coursework2 web=docker.io/cmackie95/coursework2:${env.BUILD_NUMBER}"
+				sh "ansible-playbook -i azure_rm.py -l productionVM vm_updateimage.yml"
             }
         }
     }
