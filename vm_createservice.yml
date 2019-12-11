@@ -1,4 +1,4 @@
-- name: Start MiniKube In Production VM
+- name: Create Deployment Service On Kubernetes In Production VM
   hosts: azure
 
   vars:
@@ -6,5 +6,5 @@
     myVM: productionVM
 
   tasks:
-  - name: Start minikube
-    command: minikube start --vm-driver=virtualbox
+  - name: Create Service
+    command: kubectl apply -f /home/cmackie95/kubectl_service_deployment.yml
