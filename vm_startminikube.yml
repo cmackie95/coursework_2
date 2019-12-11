@@ -1,7 +1,5 @@
 - name: Start MiniKube In Production VM
   hosts: azure
-  user: cmackie95
-  become: yes
 
   vars:
     myResourceGroup: DevOps
