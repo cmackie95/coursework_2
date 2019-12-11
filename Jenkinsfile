@@ -46,11 +46,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-				script {
-					def tfHome = tool name: 'Ansible'
-					env.PATH = "${tfHome}:${env.PATH}"
-					sh 'ansible --version'                 
-				}
+				sh 'ssh cmackie95@13.82.68.29 kubectl set image deployments/coursework2 web=docker.io/cmackie95/coursework2:"${env.BUILD_NUMBER}"'
             }
         }
     }
