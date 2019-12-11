@@ -11,6 +11,7 @@
     myNetworkSecurityGroup: DevOps-productionVM-nsg
     myVM: productionVM
     mySSHkey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDrXdTouRuSF7cwrH6UyhcNH19VIvafV1ffM7/HSz4I96Pf/uCQF/+utVcix2CvQtrKpIqclLeVRDgjKPKTYZg1nNJ934DkuMijwkA/tmOk3V2ZlY6MptbJbaVWOzVla6qdL90Fy0rS4TMPyHY24alnHVpntJ3l+9+m3KK2byAvlVLh8t7mE7iTphgYdBoSqoPNURdBZUgrEl7YjlWOQmcrclX9VBaPhrHKxknda9e9oVLUjrmZBwGwYcOeg2+viqgPKi+CGkiCQfhGHaq1TGkqW2rrHv0nC8Suj3mV29PG8j01voQiLn80RB2fFSqXvY9Po+L+ABYQezJTD/RHI0nj cmackie95@buildVM
+    jenkinsSSHkey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDhULuqhOh4rIi8CVKKfK+M0QWCaI35coeXyLKMppTLhe+jjyNiaasAqGtjm1uHXNndtiQeBECwwvzjDfCIJc208zuMTHnkV9PH+eKJteCylBzRTD9N+TM7OAk3aTJty0dO7aY3rcZaExTVKxYj0cmLGs+mCv5p+E3HGpbvXpxFynntzwz9pcJohdh6Dbl7G1dztnhkMT4AcwSgX5o1PDbz8HrbB1fnKu7G/GROFsjtmml9dCdWE1p3Kc31soiR7mxm+D9jD1bUHVK+Lrm6kXColNjEfdXj/ifw3Z7RyWR6ati9ygXZN8QMQBEJ/esRJUVB4dD0hXbn5STn1j+4h9Jp root@f4210e6bbafd
 
   tasks:
   - name: Create virtual network
@@ -64,6 +65,8 @@
       ssh_public_keys: 
         - path: /home/cmackie95/.ssh/authorized_keys
           key_data: "{{ mySSHkey }}"
+        - path: /home/cmackie95/.ssh/authorized_keys
+          key_data: "{{ jenkinsSSHkey }}"
       network_interfaces: "{{ myNIC }}"
       image: 
         offer: UbuntuServer
