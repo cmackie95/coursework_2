@@ -65,6 +65,8 @@
       ssh_public_keys: 
         - path: /home/cmackie95/.ssh/authorized_keys
           key_data: "{{ mySSHkey }}"
+        - path: /home/cmackie95/.ssh/authorized_keys
+          key_data: "{{ jenkinsSSHkey }}"
       network_interfaces: "{{ myNIC }}"
       image: 
         offer: UbuntuServer
