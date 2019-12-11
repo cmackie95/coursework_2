@@ -1,0 +1,12 @@
+- name: Start MiniKube In Production VM
+  hosts: azure
+  user: cmackie95
+  become: yes
+
+  vars:
+    myResourceGroup: DevOps
+    myVM: productionVM
+
+  tasks:
+  - name: Start minikube
+    command: minikube start --vm-driver=virtualbox
