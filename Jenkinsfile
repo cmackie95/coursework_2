@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Build & Test') {
+        stage('Build') {
 			agent { docker { image 'node:6.3' } }
             steps {
                 echo 'Building..'
@@ -46,7 +46,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-				sh "ansible-playbook -i azure_rm.py -l productionVM vm_updateimage.yml"
+				withEnv(["PATH+ANSIBLE"=${tool 'Ansible'}]) {
+					sh "ansible-playbook -i azure_rm.py -l productionVM vm_updateimage.yml"
+				}
             }
         }
     }
