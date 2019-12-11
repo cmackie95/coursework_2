@@ -9,7 +9,6 @@
   - name: Start minikube
     command: minikube start --vm-driver=virtualbox
 
-  tasks:
   - name: Create Pods
     command: kubectl apply -f /home/cmackie95/kubectl_pod_deployment.yml
     
