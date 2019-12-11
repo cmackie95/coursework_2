@@ -46,7 +46,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-				withEnv(["PATH+ANSIBLE"=${tool 'Ansible'}]) {
+				withAnsibleEnv('Ansible') {
 					sh "ansible-playbook -i azure_rm.py -l productionVM vm_updateimage.yml"
 				}
             }
