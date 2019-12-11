@@ -46,6 +46,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+				container('kubectl') {
+					sh "kubectl get nodes"
+				}
             }
         }
     }
