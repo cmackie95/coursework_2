@@ -1,0 +1,10 @@
+- name: Create Deployment Pods On Kubernetes In Production VM
+  hosts: azure
+
+  vars:
+    myResourceGroup: DevOps
+    myVM: productionVM
+
+  tasks:
+  - name: Create Pods
+    command: kubectl apply -f /home/cmackie95/kubectl_pod_deployment.yml
