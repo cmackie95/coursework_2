@@ -46,7 +46,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-				echo "ssh cmackie95@13.82.68.29 kubectl set image deployments/coursework2 web=docker.io/cmackie95/coursework2:${currentBuild.number}"
 				sh "ssh cmackie95@13.82.68.29 kubectl set image deployments/coursework2 web=docker.io/cmackie95/coursework2:${currentBuild.number}"
             }
         }
